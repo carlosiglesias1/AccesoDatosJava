@@ -33,4 +33,8 @@ public class Departamentos {
     public ArrayList<Departamento> getDepartamentos() {
         return departamentos;
     }
+
+    public boolean insertDept(){
+        
+    }
 }

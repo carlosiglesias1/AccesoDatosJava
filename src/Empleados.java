@@ -1,5 +1,6 @@
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.SQLTimeoutException;
 import java.sql.Statement;
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -39,25 +40,51 @@ public class Empleados {
         return empleados;
     }
 
-    public boolean insertEmp(String nombre) {
+    public boolean insertEmp(String nombre) throws SQLException, SQLTimeoutException {
         Conectar conexion = new Conectar();
-        try {
-            Random empno = new Random();
-            Statement statement = conexion.getConect().createStatement();
-            String sql = "INSERT INTO " + TABLE + " VALUES(" + (empno.nextInt(4000) + 2000) + ", '" + nombre
-                    + "', 'SALESMAN', 7782, '2021-10-20', 7742, 22, 30);";
-            int result = statement.executeUpdate(sql);
-            conexion.close();
-            if (result == 1)
-                return true;
-            else
-                return false;
-        } catch (Exception e) {
-            return false;
-        }
+        Random random = new Random();
+        Statement statement = conexion.getConect().createStatement();
+        int empno = (random.nextInt(4000) + 2000);
+        this.empleados
+                .add(new Empleado(empno, 7782, 30, nombre, "SALESMAN", 7742F, 22F, LocalDate.parse("2020-10-20")));
+        String sql = "INSERT INTO " + TABLE + " VALUES(" + empno + ", '" + nombre
+                + "', 'SALESMAN', 7782, '2021-10-20', 7742, 22, 30);";
+        int result = statement.executeUpdate(sql);
+        conexion.close();
+        if (result == 1)
+            return true;
+        else
+            throw new SQLException();
     }
 
-    public void deleteEmp(String nombre){
-        
+    public int deleteEmp(String nombre) throws SQLException, IndexOutOfBoundsException {
+        Conectar conexion = new Conectar();
+        Statement statement = conexion.getConect().createStatement();
+        String sql = "DELETE FROM " + TABLE + " WHERE ENAME = '" + nombre + "';";
+        for (Empleado empleado : empleados) {
+            if (empleado.getEname().equals(nombre)) {
+                if (!empleados.remove(empleado))
+                    throw new IndexOutOfBoundsException();
+                else
+                    break;
+            }
+        }
+        int r = statement.executeUpdate(sql);
+        conexion.close();
+        return r;
+    }
+
+    public int updateEmp(String oldName, String newName) throws SQLException {
+        Conectar conexion = new Conectar();
+        Statement statement = conexion.getConect().createStatement();
+        String sql = "UPDATE " + TABLE + " SET NOMBRE = " + newName + " WHERE ENAME = '" + oldName + "';";
+        for (Empleado empleado : empleados) {
+            if (empleado.getEname().equals(oldName)) {
+                empleado.setEname(newName);
+            }
+        }
+        int r = statement.executeUpdate(sql);
+        conexion.close();
+        return r;
     }
 }

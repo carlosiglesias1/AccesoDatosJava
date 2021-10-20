@@ -13,6 +13,18 @@ public class App {
         for (Departamento dept : depts.getDepartamentos()) {
             System.out.println(dept.toString());
         }
+
+        emps.insertEmp("Carlos");
+        for (Empleado emp : emps.getEmpleados()) {
+            System.out.println(emp.getEmpno() + " " + emp.getEname());
+        }
+
+        System.out.println("Rows affected: "+ emps.updateEmp("Carlos", "Chencho"));
+
+        System.out.println("Rows affected: " + emps.deleteEmp("Chencho"));
+        for (Empleado emp : emps.getEmpleados()) {
+            System.out.println(emp.getEmpno() + " " + emp.getEname());
+        }
         /*
          * if (emp.insertEmp("Carlos")) { System.out.println("Yupiii"); } else {
          * System.out.println("Doh"); }
