@@ -11,7 +11,7 @@ public class Conectar {
             // variables
             final String url = "jdbc:mysql:///carlos";
             final String user = "root";
-            final String password = "T3ng0gafas";
+            final String password = "Yourpass";
             // establish the connection
 
             this.conect = DriverManager.getConnection(url, user, password);
