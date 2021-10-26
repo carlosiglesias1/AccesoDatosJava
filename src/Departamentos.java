@@ -6,6 +6,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
+import res.Conectar;
+
 public class Departamentos {
     private ArrayList<Departamento> deptList;
     private static final String TABLE = "DEPT";

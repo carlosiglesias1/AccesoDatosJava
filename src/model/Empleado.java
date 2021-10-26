@@ -1,11 +1,9 @@
+package model;
 import java.time.LocalDate;
 
 public class Empleado {
-    private int empno;
-    private int mgr;
-    private int deptno;
-    private String ename;
-    private String job;
+    private int empno, mgr, deptno;
+    private String ename, job;
     private float sal, comm;
     private LocalDate hiredate;
 
@@ -18,6 +16,17 @@ public class Empleado {
         this.sal = sal;
         this.comm = comm;
         this.deptno = deptno;
+    }
+
+    public Empleado(){
+        this.empno = -1;
+        this.ename = "ename";
+        this.job = "";
+        this.mgr = -1;
+        this.hiredate = null;
+        this.sal = 0;
+        this.comm = 0;
+        this.deptno = -1;
     }
 
     public int getEmpno() {
