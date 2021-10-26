@@ -1,8 +1,11 @@
 import java.time.LocalDate;
 
 public class Empleado {
-    private int empno, mgr, deptno;
-    private String ename, job;
+    private int empno;
+    private int mgr;
+    private int deptno;
+    private String ename;
+    private String job;
     private float sal, comm;
     private LocalDate hiredate;
 

@@ -12,7 +12,7 @@ public class Conectar {
             // variables
             final String url = "jdbc:mysql:///carlos";
             final String user = "root";
-            final String password = "YourPass";
+            final String password = "T3ng0gafas";
             // establish the connection
 
             this.conexion = DriverManager.getConnection(url, user, password);

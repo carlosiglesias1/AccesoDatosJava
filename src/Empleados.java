@@ -68,7 +68,7 @@ public class Empleados {
     public int updateEmp(String oldName, String newName) throws SQLException {
         Connection conexion = Conectar.getConect();
         Statement statement = conexion.createStatement();
-        String sql = "UPDATE " + TABLE + " SET NOMBRE = " + newName + " WHERE ENAME = '" + oldName + "';";
+        String sql = "UPDATE " + TABLE + " SET ENAME = '" + newName + "' WHERE ENAME = '" + oldName + "';";
         for (Empleado empleado : empList) {
             if (empleado.getEname().equals(oldName)) {
                 empleado.setEname(newName);
