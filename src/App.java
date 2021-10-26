@@ -25,9 +25,6 @@ public class App {
         for (Empleado emp : emps.getEmpleados()) {
             System.out.println(emp.getEmpno() + " " + emp.getEname());
         }
-        /*
-         * if (emp.insertEmp("Carlos")) { System.out.println("Yupiii"); } else {
-         * System.out.println("Doh"); }
-         */
+        Conectar.getConect().close();
     }
 }

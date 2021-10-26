@@ -1,3 +1,4 @@
+import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -8,12 +9,12 @@ import java.util.Random;
 public class Departamentos {
     private ArrayList<Departamento> deptList;
     private static final String TABLE = "DEPT";
-    Random random = new Random();
 
     public Departamentos() {
-        Conectar conexion = new Conectar();
+        Connection conexion = Conectar.getConect();
         this.deptList = new ArrayList<>();
-        try (Statement s = conexion.getConect().createStatement();){
+        try {
+            Statement s = conexion.createStatement();
             String sql = "CREATE TABLE IF NOT EXISTS DEPT (DEPTNO DECIMAL (2,0), DNAME VARCHAR(14), LOC VARCHAR(13));";
             s.execute(sql);
             sql = "SELECT * FROM DEPT;";
@@ -33,19 +34,24 @@ public class Departamentos {
     }
 
     public boolean insertDept(String deptname) throws SQLException {
-        Conectar conexion = new Conectar();
+        Connection conexion = Conectar.getConect();
+        Random random = new Random();
         int deptno = random.nextInt(60) + 40;
         this.deptList.add(new Departamento(deptno, deptname, "A CORUÑA"));
-        Statement s = conexion.getConect().createStatement();
-        String sql = "INSERT INTO " + TABLE + "VALUES (" + Integer.toString(deptno) + ", '" + deptname
+        Statement s = conexion.createStatement();
+        String sql = "INSERT INTO " + Departamentos.TABLE + "VALUES (" + Integer.toString(deptno) + ", '" + deptname
                 + "', 'A CORUÑA');";
-        conexion.close();
-        return Integer.toString(s.executeUpdate(sql)).equals("1");
+        int rowCount = s.executeUpdate(sql);
+        if (rowCount == 1) {
+            return true;
+        } else {
+            return false;
+        }
     }
 
     public int deleteDept(String nombre) throws SQLException, IndexOutOfBoundsException {
-        Conectar conexion = new Conectar();
-        Statement statement = conexion.getConect().createStatement();
+        Connection conexion = Conectar.getConect();
+        Statement statement = conexion.createStatement();
         String sql = "DELETE FROM " + TABLE + " WHERE ENAME = '" + nombre + "';";
         for (Departamento departamento : deptList) {
             if (departamento.getDname().equals(nombre)) {
@@ -55,22 +61,18 @@ public class Departamentos {
                     break;
             }
         }
-        int r = statement.executeUpdate(sql);
-        conexion.close();
-        return r;
+        return statement.executeUpdate(sql);
     }
 
     public int updateDept(String oldName, String newName) throws SQLException {
-        Conectar conexion = new Conectar();
-        Statement statement = conexion.getConect().createStatement();
+        Connection conexion = Conectar.getConect();
+        Statement statement = conexion.createStatement();
         String sql = "UPDATE " + TABLE + " SET NOMBRE = " + newName + " WHERE ENAME = '" + oldName + "';";
         for (Departamento departamento : deptList) {
             if (departamento.getDname().equals(oldName)) {
                 departamento.setDname(newName);
             }
         }
-        int r = statement.executeUpdate(sql);
-        conexion.close();
-        return r;
+        return statement.executeUpdate(sql);
     }
 }
