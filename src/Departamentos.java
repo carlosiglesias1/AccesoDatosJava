@@ -41,12 +41,7 @@ public class Departamentos {
         Statement s = conexion.createStatement();
         String sql = "INSERT INTO " + Departamentos.TABLE + "VALUES (" + Integer.toString(deptno) + ", '" + deptname
                 + "', 'A CORUÑA');";
-        int rowCount = s.executeUpdate(sql);
-        if (rowCount == 1) {
-            return true;
-        } else {
-            return false;
-        }
+        return Integer.toString(s.executeUpdate(sql)).equals("1");
     }
 
     public int deleteDept(String nombre) throws SQLException, IndexOutOfBoundsException {
