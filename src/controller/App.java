@@ -39,6 +39,8 @@ public class App {
             break;
         case 2:
             break;
+        default:
+            System.out.println("A ver a que andamos");
         }
     }
 }
