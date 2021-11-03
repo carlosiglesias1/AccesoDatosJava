@@ -25,7 +25,8 @@ public class Main {
             while (result.next()) {
                 System.out.println(result.getString(2).toString());
             }
-
+            
+            //Ejercicio 15
             CallableStatement cs = conexion.prepareCall("{call getEMP(?)}");
             cs.setInt(1, Integer.parseInt(tecaldo.nextLine()));
             ResultSet rs = cs.executeQuery();
