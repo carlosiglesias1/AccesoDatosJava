@@ -15,7 +15,7 @@ public class Empleados {
 
     private ArrayList<Empleado> empleados;
 
-    public Empleados() {
+    public Empleados() throws SQLException {
         Connection conexion = Conectar.getConect();
         this.empleados = new ArrayList<Empleado>();
         try {
@@ -45,9 +45,9 @@ public class Empleados {
     }
 
     public boolean insertEmp(String nombre) throws SQLException, SQLTimeoutException {
-        Conectar conexion = new Conectar();
+        Connection conexion = Conectar.getConect();
         Random random = new Random();
-        Statement statement = conexion.getConect().createStatement();
+        Statement statement = conexion.createStatement();
         int empno = (random.nextInt(4000) + 2000);
         this.empleados
                 .add(new Empleado(empno, 7782, 30, nombre, "SALESMAN", 7742F, 22F, LocalDate.parse("2020-10-20")));
@@ -62,8 +62,8 @@ public class Empleados {
     }
 
     public int deleteEmp(String nombre) throws SQLException, IndexOutOfBoundsException {
-        Conectar conexion = new Conectar();
-        Statement statement = conexion.getConect().createStatement();
+        Connection conexion =Conectar.getConect();
+        Statement statement = conexion.createStatement();
         String sql = "DELETE FROM " + TABLE + " WHERE ENAME = '" + nombre + "';";
         for (Empleado empleado : empleados) {
             if (empleado.getEname().equals(nombre)) {
@@ -79,8 +79,8 @@ public class Empleados {
     }
 
     public int updateEmp(String oldName, String newName) throws SQLException {
-        Conectar conexion = new Conectar();
-        Statement statement = conexion.getConect().createStatement();
+        Connection conexion = Conectar.getConect();
+        Statement statement = conexion.createStatement();
         String sql = "UPDATE " + TABLE + " SET NOMBRE = " + newName + " WHERE ENAME = '" + oldName + "';";
         for (Empleado empleado : empleados) {
             if (empleado.getEname().equals(oldName)) {
